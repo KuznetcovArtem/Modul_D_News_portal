@@ -2,10 +2,9 @@
 
 {% block content %}
 {{ flatpage.content }}
-    <h2>Все посты:</h2>
-<h6>Количество постов: >>> {{ posts|length }} <<<</h6>
+    <h2>Один пост:</h2>
 <hr>
-    {% if posts %}
+        {% if posts_one %}
 <head>
   <meta charset="utf-8">
   <title>Таблица в центре окна</title>
@@ -22,21 +21,17 @@
  </head>
         <table>
             <tr>
-                <td> Number </td>
                 <td> Title </td>
                 <td> Publish date </td>
                 <td> Text </td>
-                            </tr>
-            {% for post in posts %}
-            <tr>
-                <td>{{ post.pk }}</td>
-                <td>{{ post.title }}</td>
-                <td>{{ post.dateCreation|date:'M d Y' }}</td>
-                <td>{{ post.text|truncatewords:20 }}</td>
             </tr>
-            {% endfor %}
+            <tr>
+                <td>{{ posts_one.title }}</td>
+                <td>{{ posts_one.dateCreation|date:'M d Y' }}</td>
+                <td>{{ posts_one.text }}</td>
+            </tr>
         </table>
     {% else %}
-        <h3>Постов нет!</h3>h2>
+        <h3>Что-то пошло не так!</h3>h2>
     {% endif %}
 {% endblock content %}

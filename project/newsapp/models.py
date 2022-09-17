@@ -47,6 +47,14 @@ class Post(models.Model):
     text = models.TextField()
     rating = models.SmallIntegerField(default=0)
 
+    # def censor(self):
+    #     bad_words = ('редиска', )
+    #     global text
+    #     for word in text.split():
+    #         if word.lower() in bad_words:
+    #             text = text.replace(word, f"{word[0]}{'*' * (len(word) -1)}")
+    #     return text
+
     def like(self):
         self.rating += 1
         self.save()
