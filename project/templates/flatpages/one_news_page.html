@@ -1,7 +1,12 @@
 {% extends 'flatpages/default.html' %}
 
+{% load custom_filters %}
+
+{% block title %}
+One News page
+{% endblock title %}
+
 {% block content %}
-{{ flatpage.content }}
     <h2>Один пост:</h2>
 <hr>
         {% if posts_one %}
@@ -28,7 +33,7 @@
             <tr>
                 <td>{{ posts_one.title }}</td>
                 <td>{{ posts_one.dateCreation|date:'M d Y' }}</td>
-                <td>{{ posts_one.text }}</td>
+                <td>{{ posts_one.text|censor }}</td>
             </tr>
         </table>
     {% else %}

@@ -56,5 +56,11 @@
 # Вывести все комментарии (дата, пользователь, рейтинг, текст) к этой статье.
 >>> Post.objects.values('dateCreation', 'author__authorUser__username', 'rating', 'title')
 
-Возможно, но это не точно) Все же необходимо проверить! Узнать решение у ментора!
->>> Post.objects.values('author__authorUser__username', 'rating', 'text')
+Возможно,
+
+# Вывод статьи\новости с наибольшим рейтингом
+best_post = Post.objects.order_by('-rating').values('author__authorUser__username', 'rating', 'title')[0]
+the_post = Post.objects.get(rating=best_post['rating'])
+the_post
+best_post_comments = the_post.comment_set.all()
+best_post_comments

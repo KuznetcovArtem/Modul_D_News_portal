@@ -1,7 +1,12 @@
 {% extends 'flatpages/default.html' %}
 
+{% load custom_filters %}
+
+{% block title %}
+News page
+{% endblock title %}
+
 {% block content %}
-{{ flatpage.content }}
     <h2>Все посты:</h2>
 <h6>Количество постов: >>> {{ posts|length }} <<<</h6>
 <hr>
@@ -32,7 +37,7 @@
                 <td>{{ post.pk }}</td>
                 <td>{{ post.title }}</td>
                 <td>{{ post.dateCreation|date:'M d Y' }}</td>
-                <td>{{ post.text|truncatewords:20 }}</td>
+                <td>{{ post.text|censor|truncatechars:20 }}</td>
             </tr>
             {% endfor %}
         </table>
