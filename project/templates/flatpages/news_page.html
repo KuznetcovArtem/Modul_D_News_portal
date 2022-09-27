@@ -33,16 +33,22 @@ News page
         <table>
             <tr>
                 <td> Number </td>
+                <td> Category </td>
                 <td> Title </td>
-                <td> Publish date </td>
                 <td> Text </td>
+                <td> Publish date </td>
                             </tr>
             {% for post in posts %}
             <tr>
                 <td>{{ post.pk }}</td>
+                <td>
+                    {% for cat in post.postCategory.all %}
+                        {{ cat.name }}
+                    {% endfor %}
+                </td>
                 <td>{{ post.title }}</td>
-                <td>{{ post.dateCreation|date:'M d Y' }}</td>
                 <td>{{ post.text|censor|truncatechars:20 }}</td>
+                <td>{{ post.dateCreation|date:'M d Y' }}</td>
             </tr>
             {% endfor %}
         </table>

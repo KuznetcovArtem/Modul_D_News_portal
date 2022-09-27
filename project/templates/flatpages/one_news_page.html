@@ -27,13 +27,13 @@ One News page
         <table>
             <tr>
                 <td> Title </td>
-                <td> Publish date </td>
                 <td> Text </td>
+                <td> Publish date </td>
             </tr>
             <tr>
                 <td>{{ posts_one.title }}</td>
-                <td>{{ posts_one.dateCreation|date:'M d Y' }}</td>
                 <td>{{ posts_one.text|censor }}</td>
+                <td>{{ posts_one.dateCreation|date:'M d Y' }}</td>
             </tr>
         </table>
     {% else %}
