@@ -1,5 +1,5 @@
 # Создать двух пользователей (с помощью метода User.objects.create_user('username')).
->>> u1 = User.objects.create_user(username='Artem')  
+>>> u1 = User.objects.create_user(username='Artem')
 >>> u2 = User.objects.create_user(username='Ivan')  
 # Создать два объекта модели Author, связанные с пользователями.
 >>> Author.objects.create(authorUser=u1)
