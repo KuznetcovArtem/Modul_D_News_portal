@@ -15,10 +15,13 @@ News page
    </form>
 <h6>Количество постов: >>> {{ posts|length }} <<<</h6>
 <hr>
+    {% if perms.newsapp.add_post %}
+    <a href="{% url 'post_create' %}">Add post</a>
+    {% endif %}
+
     {% if posts %}
 <head>
   <meta charset="utf-8">
-  <title>Таблица в центре окна</title>
   <style>
    table {
     width: 800px; /* Ширина таблицы */
@@ -37,10 +40,15 @@ News page
                 <td> Title </td>
                 <td> Text </td>
                 <td> Publish date </td>
+
+                {% if perms.newsapp.edit_post or perms.newsapp.delete_post %}
+                <td> Actions </td>
+                {% endif %}
                             </tr>
             {% for post in posts %}
             <tr>
-                <td>{{ post.pk }}</td>
+
+                <td><a href="/news/{{ post.pk }}">{{ post.pk }}</a></td>
                 <td>
                     {% for cat in post.postCategory.all %}
                         {{ cat.name }}
@@ -49,6 +57,15 @@ News page
                 <td>{{ post.title }}</td>
                 <td>{{ post.text|censor|truncatechars:20 }}</td>
                 <td>{{ post.dateCreation|date:'M d Y' }}</td>
+                <td>
+                    {# А здесь доступ для каждой ссылки теперь будем проверять отдельно #}
+                    {% if perms.newsapp.change_post %}
+                    <a href="{% url 'post_edit' pk=post.id %}">Edit</a>
+                    {% endif %}
+                    {% if perms.newsapp.delete_post %}
+                    <a href="{% url 'post_delete' post.id %}">Delete</a>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </table>

@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
@@ -29,19 +30,23 @@ class PostDetail(DetailView):
     context_object_name = 'posts_one'
 
 
-class PostCreate(CreateView):
+class PostCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
+    permission_required = ('newsapp.add_post')
+    raise_exception = True
     form_class = PostForm
     model = Post
     template_name = 'flatpages/post_edit.html'
 
 
-class PostEdit(UpdateView):
+class PostEdit(PermissionRequiredMixin, UpdateView):
+    permission_required = ('newsapp.change_post')
     form_class = PostForm
     model = Post
     template_name = 'flatpages/post_edit.html'
 
 
-class PostDelete(DeleteView):
+class PostDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = ('newsapp.delete_post')
     model = Post
     template_name = 'flatpages/post_delete.html'
     success_url = reverse_lazy('post_list')
