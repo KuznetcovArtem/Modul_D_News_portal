@@ -15,7 +15,7 @@ News page
    </form>
 <h6>Количество постов: >>> {{ category_news_list|length }} <<<</h6>
     {% if is_not_subscriber %}
-        <p class="text-center"><a href="{% 'subscribe' category.id %}" class="btn btn-secondary btn-sm">subscribe</a></p>
+        <p class="text-center"><a href="{% url 'subscribe' postCategory.id %}" class="btn btn-secondary btn-sm">Subscribe</a></p>
     {% endif %}
 <hr>
     {% if perms.newsapp.add_post %}

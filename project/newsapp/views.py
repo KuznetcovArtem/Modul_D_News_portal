@@ -78,4 +78,4 @@ def subscribe(request, pk):
     category.subscribers.add(user)
 
     message = 'You have successfully subscribed to the newsletter of the category:'
-    return render(request, 'flatpages/subscribe.html', {'postCategory': category, 'message': message})
+    return render(request, 'flatpages/subscribe.html', {'category': category, 'message': message})
