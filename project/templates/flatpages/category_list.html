@@ -13,13 +13,16 @@ News page
        {{ filterset.form.as_p }}
        <input type="submit" value="Найти" />
    </form>
-<h6>Количество постов: >>> {{ posts|length }} <<<</h6>
+<h6>Количество постов: >>> {{ category_news_list|length }} <<<</h6>
+    {% if is_not_subscriber %}
+        <p class="text-center"><a href="{% 'subscribe' category.id %}" class="btn btn-secondary btn-sm">subscribe</a></p>
+    {% endif %}
 <hr>
     {% if perms.newsapp.add_post %}
     <a href="{% url 'post_create' %}">Add post</a>
     {% endif %}
 
-    {% if posts %}
+    {% if category_news_list %}
 <head>
   <meta charset="utf-8">
   <style>
@@ -45,7 +48,7 @@ News page
                 <td> Actions </td>
                 {% endif %}
                             </tr>
-            {% for post in posts %}
+            {% for post in category_news_list %}
             <tr>
 
                 <td><a href="/news/{{ post.pk }}">{{ post.pk }}</a></td>
