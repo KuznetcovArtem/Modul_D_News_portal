@@ -67,7 +67,7 @@ class Post(models.Model):
         return '{} ... {}'.format(self.text[0:128], str(self.rating)) # Лучше использовать форматирование, По простому можно: "self.text[0:128] + '...' + str(self.rating)" но будет расходовать много памяти
 
     def get_absolute_url(self):
-        return reverse('post_detail', args=[str(self.id)])
+        return f'/news/{self.id}'  #reverse('post_detail', args=[str(self.id)])
 
 
 class PostCategory(models.Model):
