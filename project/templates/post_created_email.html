@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-</head>
+    </head>
 <body>
-<р2>Здравствуй! Новая <a href="{{ link }}">статья</a> в твоем любимом разделе!</h2>
-    <p>{{ text }}</p>>
+{% load custom_filters %}
+<h2>Здравствуй, {{ user }}! Новая <a href="{{ link }}">статья</a> в твоем любимом разделе!</h2>
+    <p>{{ text|censor|truncatechars:50 }}</p>
 </body>
 </html>

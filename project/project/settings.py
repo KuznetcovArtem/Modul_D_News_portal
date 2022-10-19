@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 import os
+from dotenv import load_dotenv
+load_dotenv()
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -42,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'fpages',
-    'newsapp.apps.NawsappConfig', #Проверить!
+    'newsapp.apps.NawsappConfig',
     'django_filters',
 
     'accounts',
@@ -165,4 +167,4 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = True
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_ENAIL')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
