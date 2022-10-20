@@ -16,7 +16,6 @@ from ...models import Post, Category
 logger = logging.getLogger(__name__)
 
 
-# наша задача по выводу текста на экран
 def my_job():
     today = datetime.datetime.now()
     last_week = today - datetime.timedelta(days=7)
@@ -29,7 +28,6 @@ def my_job():
             'link': settings.SITE_URL,
             'posts': posts,
         }
-
     )
     msg = EmailMultiAlternatives(
         subject='Статьи за неделю',
@@ -56,7 +54,7 @@ class Command(BaseCommand):
         # добавляем работу нашему задачнику
         scheduler.add_job(
             my_job,
-            trigger=CronTrigger(day_of_week="fri", hour="16", minute="00"),
+            trigger=CronTrigger(day_of_week="fri", hour="00", minute="00"),  #second="*/10"
             # То же, что и интервал, но задача тригера таким образом более понятна django
             id="my_job",  # уникальный айди
             max_instances=1,
