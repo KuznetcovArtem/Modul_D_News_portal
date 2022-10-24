@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.decorators.cache import cache_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path('pages/', include('django.contrib.flatpages.urls')),
-    path('news/', include('newsapp.urls')),
+    path('news/', cache_page(60*1), include('newsapp.urls')),
 ]

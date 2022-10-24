@@ -3,13 +3,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.decorators.cache import cache_page
 from django.shortcuts import get_object_or_404, render
 from .models import Post, Category
 from .filters import PostFilter
 from .forms import PostForm
-from .tasks import notify_about_new_post
 
 
+@cache_page(60 * 1)
 class PostList(ListView):
     model = Post
     ordering = '-dateCreation'
@@ -28,6 +29,7 @@ class PostList(ListView):
         return context
 
 
+@cache_page(60 * 5)
 class PostDetail(DetailView):
     model = Post
     template_name = 'flatpages/one_news_page.html'
@@ -40,10 +42,6 @@ class PostCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     form_class = PostForm
     model = Post
     template_name = 'flatpages/post_edit.html'
-
-    def add_notify_about_new_post(self, request):
-        notify_about_new_post.delay()
-        return render(request)
 
 
 class PostEdit(PermissionRequiredMixin, UpdateView):

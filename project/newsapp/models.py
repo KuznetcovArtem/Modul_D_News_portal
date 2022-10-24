@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.urls import reverse
+from django.core.cache import cache
 
 
 class Author(models.Model):
@@ -64,10 +65,14 @@ class Post(models.Model):
         self.save()
 
     def preview(self):
-        return '{} ... {}'.format(self.text[0:128], str(self.rating)) # Лучше использовать форматирование, По простому можно: "self.text[0:128] + '...' + str(self.rating)" но будет расходовать много памяти
+        return '{} ... {}'.format(self.text[0:128], str(self.rating)) # git add Лучше использовать форматирование, По простому можно: "self.text[0:128] + '...' + str(self.rating)" но будет расходовать много памяти
 
     def get_absolute_url(self):
         return f'/news/{self.id}'  #reverse('post_detail', args=[str(self.id)])
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        cache.delete(f'post-{self.pk}')
 
 
 class PostCategory(models.Model):
