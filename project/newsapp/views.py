@@ -1,11 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.shortcuts import get_object_or_404, render
 from .models import Post, Category
 from .filters import PostFilter
 from .forms import PostForm
+from .tasks import notify_about_new_post
 
 
 class PostList(ListView):
@@ -38,6 +40,10 @@ class PostCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
     form_class = PostForm
     model = Post
     template_name = 'flatpages/post_edit.html'
+
+    def add_notify_about_new_post(self, request):
+        notify_about_new_post.delay()
+        return render(request)
 
 
 class PostEdit(PermissionRequiredMixin, UpdateView):
